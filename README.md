@@ -118,6 +118,46 @@ Upload screenshots, wireframes, PDFs, and diagrams directly to tasks. Architectu
 
 ---
 
+## Screenshots
+
+<details>
+<summary>Click to view UI Screenshots</summary>
+
+  ### Authentication
+<img width="1919" height="904" alt="Screenshot 2026-05-25 004539" src="https://github.com/user-attachments/assets/955c5ef6-ca64-4449-a313-edfe1012b8b1" />
+
+</br>
+
+### Project Dashboard
+<img width="1919" height="908" alt="Screenshot 2026-05-25 004553" src="https://github.com/user-attachments/assets/054e9ab2-f63c-43d3-bd56-552cdd9f13fb" />
+
+
+### Add Project
+<img width="1919" height="906" alt="Screenshot 2026-05-25 004623" src="https://github.com/user-attachments/assets/97ccb8cc-fa71-40ea-945a-465ca8fd4356" />
+
+
+### Project dashboard
+<img width="1919" height="901" alt="Screenshot 2026-05-25 004739" src="https://github.com/user-attachments/assets/7f48eb0e-6327-446e-8608-d64b1c8bee49" />
+
+### Kanban Board & Tasks
+<img width="1916" height="902" alt="Screenshot 2026-05-25 004804" src="https://github.com/user-attachments/assets/8da954ba-d3aa-454a-8641-b88ae8f75a79" />
+
+### Add task
+<img width="1919" height="913" alt="Screenshot 2026-05-25 004837" src="https://github.com/user-attachments/assets/83981ef6-a4a3-4125-8810-0efa64b4e2fb" />
+
+### Manage Task using Drag and Drop
+<img width="1919" height="908" alt="Screenshot 2026-05-25 005015" src="https://github.com/user-attachments/assets/8bcb0b2a-3368-411f-9f0a-475f09c6fe4e" />
+
+### Markdown Notes
+<img width="1919" height="911" alt="Screenshot 2026-05-25 005114" src="https://github.com/user-attachments/assets/7cececdf-eaaa-4c52-8296-79c70c53b5db" />
+
+### Create Sprint
+<img width="1919" height="911" alt="Screenshot 2026-05-25 005147" src="https://github.com/user-attachments/assets/13901221-7fa9-45b8-a32c-89e246be0ba3" />
+
+### Project Dashboard
+<img width="1919" height="909" alt="Screenshot 2026-05-25 005232" src="https://github.com/user-attachments/assets/0cd1d0ce-2b36-4204-9b94-388b6ea444fd" />
+
+
 ## Tech Stack
 
 ### Frontend
