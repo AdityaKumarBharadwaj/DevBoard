@@ -120,9 +120,6 @@ Upload screenshots, wireframes, PDFs, and diagrams directly to tasks. Architectu
 
 ## Screenshots
 
-<details>
-<summary>Click to view UI Screenshots</summary>
-
   ### Authentication
 <img width="1919" height="904" alt="Screenshot 2026-05-25 004539" src="https://github.com/user-attachments/assets/955c5ef6-ca64-4449-a313-edfe1012b8b1" />
 
