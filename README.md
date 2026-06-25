@@ -50,7 +50,7 @@ The platform combines Kanban workflows, Markdown-powered documentation, syntax-h
 
 <br />
 
-[Live Demo](#) · [Report Bug](../../issues) · [Request Feature](../../issues)
+[Live Demo](https://thedevboard.vercel.app) · [Report Bug](../../issues) · [Request Feature](../../issues)
 
 <br />
 
