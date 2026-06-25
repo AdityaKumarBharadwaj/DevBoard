@@ -12,7 +12,6 @@ const taskRoutes = require('./routes/taskRoutes');
 const sprintRoutes = require('./routes/sprintRoutes');
 const noteRoutes = require('./routes/noteRoutes');
 const { sendSuccess } = require('./utils/responseHelpers');
-const upload = multer({ storage, fileFilter });
 
 // Load environment variables from .env
 dotenv.config();
@@ -20,21 +19,6 @@ dotenv.config();
 // Ensure uploads folder exists before using multer or static serving
 const uploadsPath = path.join(__dirname, 'uploads');
 fs.mkdirSync(uploadsPath, { recursive: true });
-
-// CORS middleware
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
-    credentials: true,
-  })
-);
-
-// Body parsing middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Static uploads folder
-app.use('/uploads', express.static(uploadsPath));
 
 // Multer configuration
 const storage = multer.diskStorage({
@@ -54,6 +38,23 @@ const fileFilter = (req, file, cb) => {
     cb(new Error('Unsupported file type'), false);
   }
 };
+
+const upload = multer({ storage, fileFilter });
+
+// CORS middleware
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    credentials: true,
+  })
+);
+
+// Body parsing middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Static uploads folder
+app.use('/uploads', express.static(uploadsPath));
 
 
 
