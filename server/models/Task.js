@@ -53,12 +53,6 @@ const taskSchema = new mongoose.Schema({
     default: null,
   },
 
-  // Related sprint
-  sprintId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Sprint',
-    default: null,
-  },
 
   // Related project
   projectId: {
@@ -79,11 +73,6 @@ const taskSchema = new mongoose.Schema({
     default: [],
   },
 
-  // Attached file paths
-  attachments: {
-    type: [String],
-    default: [],
-  },
 
   // Task creation date
   createdAt: {

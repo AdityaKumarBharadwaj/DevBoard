@@ -1,7 +1,5 @@
-import { createContext, useContext, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import Toast, { useToast } from '../components/ui/Toast';
 import {
   LayoutDashboard,
   FolderKanban,
@@ -17,17 +15,7 @@ const navItems = [
   { name: 'Settings', to: '/settings', icon: Settings },
 ];
 
-export const ToastContext = createContext(null);
-export const useToastContext = () => {
-  const context = useContext(ToastContext);
-  if (!context) {
-    throw new Error('useToastContext must be used within ToastContext.Provider');
-  }
-  return context;
-};
-
 export default function DashboardLayout() {
-  const { toasts, showToast, removeToast } = useToast();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -40,8 +28,7 @@ export default function DashboardLayout() {
     : 'DB';
 
   return (
-    <ToastContext.Provider value={{ showToast }}>
-      <div className="flex h-screen w-screen overflow-hidden bg-dark-950 text-slate-100">
+    <div className="flex h-screen w-screen overflow-hidden bg-dark-950 text-slate-100">
         <aside className="w-64 h-full flex-shrink-0 bg-dark-900 border-r border-surface-border flex flex-col">
           <div className="flex h-full flex-col px-5 py-6">
             
@@ -117,8 +104,5 @@ export default function DashboardLayout() {
           </div>
         </div>
       </div>
-
-      <Toast toasts={toasts} removeToast={removeToast} />
-    </ToastContext.Provider>
   );
 }

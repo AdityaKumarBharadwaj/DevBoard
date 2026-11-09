@@ -1,17 +1,48 @@
+/**
+ * ProjectCard Component
+ * ============================================================================
+ * Renders an interactive project summary card for dashboard and project lists.
+ * Displays title, description, tech stack chips, task counts, GitHub repository link,
+ * formatted creation date, and status indicator badge.
+ * Provides handlers for card navigation and isolated deletion.
+ * ============================================================================
+ */
+
 import { GitBranch, Clock, Circle, Trash2, ExternalLink, ChevronRight } from 'lucide-react';
 
+/**
+ * ProjectCard Component
+ * 
+ * @param {Object} props
+ * @param {Object} props.project - Project entity details.
+ * @param {Function} props.onDelete - Callback invoked to delete the project.
+ * @param {Function} props.onClick - Callback invoked when clicking the card to navigate.
+ * @returns {JSX.Element}
+ */
 export default function ProjectCard({ project, onDelete, onClick }) {
+  /**
+   * Format ISO date string to a localized readable format (e.g., 'Jan 01, 2026').
+   * 
+   * @param {string} date - ISO date string.
+   * @returns {string} Formatted date.
+   */
   const formatDate = (date) => {
     if (!date) return '';
     const d = new Date(date);
     return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
   };
 
+  /**
+   * Retrieve color badge palette and label for project status.
+   * 
+   * @param {string} status - Project status ('active', 'paused', 'completed').
+   * @returns {{ bg: string, text: string, label: string }}
+   */
   const getStatusConfig = (status) => {
     const configs = {
       active: { bg: 'bg-green-500/10', text: 'text-green-400', label: 'Active' },
       paused: { bg: 'bg-yellow-500/10', text: 'text-yellow-400', label: 'Paused' },
-      completed: { bg: 'bg-indigo-500/10', text: 'text-indigo-400', label: 'Completed' },
+      completed: { bg: 'bg-blue-500/10', text: 'text-blue-400', label: 'Completed' },
     };
     return configs[status] || configs.active;
   };
@@ -26,8 +57,14 @@ export default function ProjectCard({ project, onDelete, onClick }) {
       onClick={onClick}
       role="button"
       tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick && onClick();
+        }
+      }}
     >
-      {/* Top Row: Status Badge and Delete Button */}
+      {/* Top Row: Status Badge and Delete Action */}
       <div className="flex items-center justify-between mb-4">
         <div className={`badge ${statusConfig.bg} ${statusConfig.text}`}>
           {statusConfig.label}
@@ -35,6 +72,7 @@ export default function ProjectCard({ project, onDelete, onClick }) {
         <button
           type="button"
           onClick={(e) => {
+            // Stop propagation to prevent triggering the card's onClick navigation
             e.preventDefault();
             e.stopPropagation();
             onDelete && onDelete(project._id || project.id);
@@ -46,7 +84,7 @@ export default function ProjectCard({ project, onDelete, onClick }) {
         </button>
       </div>
 
-      {/* Middle: Title and Description */}
+      {/* Title & Description */}
       <div className="mb-4">
         <h3 className="text-lg font-semibold text-white truncate">
           {project.title || project.name || 'Untitled Project'}
@@ -56,11 +94,11 @@ export default function ProjectCard({ project, onDelete, onClick }) {
         </p>
       </div>
 
-      {/* Tech Stack Tags */}
+      {/* Tech Stack Chips */}
       {displayTags.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-4">
           {displayTags.map((tag) => (
-            <span key={tag} className="badge bg-surface-raised text-indigo-400">
+            <span key={tag} className="badge bg-surface-raised text-blue-400">
               {tag}
             </span>
           ))}
@@ -72,7 +110,7 @@ export default function ProjectCard({ project, onDelete, onClick }) {
         </div>
       )}
 
-      {/* Bottom Stats Row */}
+      {/* Bottom Stats & Metadata */}
       <div className="flex items-center justify-between text-xs text-gray-400">
         <div className="flex items-center gap-1">
           <Circle size={14} />
@@ -85,7 +123,7 @@ export default function ProjectCard({ project, onDelete, onClick }) {
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="flex items-center gap-1 hover:text-indigo-400 transition"
+            className="flex items-center gap-1 hover:text-blue-400 transition"
             aria-label="View on GitHub"
           >
             <GitBranch size={14} />
@@ -98,7 +136,7 @@ export default function ProjectCard({ project, onDelete, onClick }) {
           <span>{formatDate(project.createdAt)}</span>
         </div>
 
-        <ChevronRight size={16} className="text-indigo-400" />
+        <ChevronRight size={16} className="text-blue-400" />
       </div>
     </div>
   );

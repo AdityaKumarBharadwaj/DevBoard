@@ -1,9 +1,20 @@
+/**
+ * Task Controller
+ * ============================================================================
+ * Handles CRUD operations and reordering logic for Kanban tasks within projects.
+ * ============================================================================
+ */
+
 const Task = require('../models/Task');
 const { sendSuccess, sendError } = require('../utils/responseHelpers');
 
 /**
- * Get tasks for a project, sorted by order ascending.
- * @param {Object} req - Express request object
+ * Retrieve all tasks associated with a specific project.
+ * Tasks are sorted in ascending order by their `order` index so that Kanban cards
+ * render in their precise drag-and-drop sequence.
+ * 
+ * @route GET /api/tasks/:projectId
+ * @param {Object} req - Express request object containing projectId in req.params
  * @param {Object} res - Express response object
  */
 const getTasksByProject = async (req, res) => {
@@ -16,8 +27,15 @@ const getTasksByProject = async (req, res) => {
 };
 
 /**
- * Create a new task inside the specified project.
- * @param {Object} req - Express request object
+ * Create a new task within a project.
+ * Uses countDocuments() to determine the total number of existing tasks in the project
+ * and sets the new task's position order to (count + 1), appending it to the bottom.
+ * 
+ * Note: countDocuments() runs efficiently directly on the database engine without
+ * loading entire document payloads into server memory.
+ * 
+ * @route POST /api/tasks/:projectId
+ * @param {Object} req - Express request object with task details in req.body
  * @param {Object} res - Express response object
  */
 const createTask = async (req, res) => {
@@ -35,8 +53,11 @@ const createTask = async (req, res) => {
 };
 
 /**
- * Update a task by id.
- * @param {Object} req - Express request object
+ * Update an existing task by its ID.
+ * Returns the updated document and enforces schema validators on update.
+ * 
+ * @route PUT /api/tasks/:id
+ * @param {Object} req - Express request object containing taskId in req.params and updates in req.body
  * @param {Object} res - Express response object
  */
 const updateTask = async (req, res) => {
@@ -58,8 +79,10 @@ const updateTask = async (req, res) => {
 };
 
 /**
- * Delete a task by id.
- * @param {Object} req - Express request object
+ * Delete a task by its ID.
+ * 
+ * @route DELETE /api/tasks/:id
+ * @param {Object} req - Express request object containing taskId in req.params
  * @param {Object} res - Express response object
  */
 const deleteTask = async (req, res) => {
@@ -77,8 +100,14 @@ const deleteTask = async (req, res) => {
 };
 
 /**
- * Update task order and status for multiple tasks.
- * @param {Object} req - Express request object
+ * Reorder multiple tasks across or within columns in bulk.
+ * 
+ * Executes parallel database updates using Promise.all and Array.prototype.map().
+ * Each entry updates only the `order` and `status` fields, ensuring efficient
+ * synchronization after drag-and-drop operations on the frontend board.
+ * 
+ * @route PATCH /api/tasks/reorder
+ * @param {Object} req - Express request object with array of { _id, order, status } in req.body.tasks
  * @param {Object} res - Express response object
  */
 const updateTaskOrder = async (req, res) => {

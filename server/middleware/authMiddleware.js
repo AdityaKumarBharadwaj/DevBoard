@@ -17,10 +17,10 @@ const protect = async (req, res, next) => {
     }
 
     // Extract token from 'Bearer <token>'
-    const token = authHeader.slice(7);
+    const token = authHeader.slice(7);          // Another common way is:  const token = authHeader.split(' ')[1];
 
     // Verify and decode token
-    let decoded;
+    let decoded;            // decoded contains id, iat, exp
     try {
       decoded = jwt.verify(token, process.env.JWT_SECRET);
     } catch (error) {

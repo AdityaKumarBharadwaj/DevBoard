@@ -3,9 +3,8 @@ const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { sendSuccess, sendError } = require('../utils/responseHelpers');
 
-/**
- * Generate JWT token
- */
+
+// Generate JWT token
 const generateToken = (userId) => {
   return jwt.sign(
     { id: userId },
@@ -14,10 +13,8 @@ const generateToken = (userId) => {
   );
 };
 
-/**
- * Register new user
- * POST /api/auth/register
- */
+
+// Register new user
 const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -37,7 +34,8 @@ const registerUser = async (req, res) => {
     }
 
     // Hash password
-    const passwordHash = await bcryptjs.hash(password, 10);
+    const passwordHash = await bcryptjs.hash(password, 10);    // Salt Rounds / Cost Factor
+    // Bcrypt performs repeated CPU-intensive cryptographic computations involving the password and a random salt. The cost factor controls how many rounds of this expensive computation are performed.
 
     // Create user
     const user = await User.create({
@@ -68,10 +66,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-/**
- * Login existing user
- * POST /api/auth/login
- */
+// Login existing user
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -86,7 +81,7 @@ const loginUser = async (req, res) => {
     }
 
     // Check password
-    const isPasswordValid = await user.matchPassword(password);
+    const isPasswordValid = await user.matchPassword(password);   // defined in User schema
 
     if (!isPasswordValid) {
       return sendError(res, 'Invalid email or password', 401);
@@ -110,10 +105,9 @@ const loginUser = async (req, res) => {
   }
 };
 
-/**
- * Get current logged-in user
- * GET /api/auth/me
- */
+
+// Get current logged-in user
+// GET /api/auth/me
 const getMe = async (req, res) => {
   return sendSuccess(res, req.user);
 };

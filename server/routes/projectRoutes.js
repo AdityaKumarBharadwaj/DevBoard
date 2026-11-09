@@ -3,7 +3,7 @@ const router = express.Router();
 const { getProjects, createProject, updateProject, deleteProject } = require('../controllers/projectController');
 const protect = require('../middleware/authMiddleware');
 
-router.use(protect);
+router.use(protect);   // middleware
 
 router.get('/', getProjects);
 router.post('/', createProject);

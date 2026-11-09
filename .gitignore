@@ -1,0 +1,16 @@
+# Sprints & Notes (Temporarily ignored)
+client/src/components/notes/
+client/src/components/sprints/
+client/src/hooks/useNotes.js
+client/src/hooks/useSprints.js
+client/src/services/noteService.js
+client/src/services/sprintService.js
+server/controllers/noteController.js
+server/controllers/sprintController.js
+server/models/Note.js
+server/models/Sprint.js
+server/routes/noteRoutes.js
+server/routes/sprintRoutes.js
+
+/API_ARCHITECTURE.md
+devBoard/

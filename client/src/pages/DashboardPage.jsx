@@ -1,3 +1,12 @@
+/**
+ * DashboardPage Component
+ * ============================================================================
+ * Primary dashboard view displaying high-level project metrics (total projects,
+ * active projects, total tasks), filterable project cards grid (all, active,
+ * paused, completed), and quick creation modal dialog.
+ * ============================================================================
+ */
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -6,26 +15,36 @@ import ProjectCard from '../components/projects/ProjectCard';
 import CreateProjectModal from '../components/projects/CreateProjectModal';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import EmptyState from '../components/ui/EmptyState';
-import logo from '../assets/logo.png';
-import { Plus, FolderKanban, TrendingUp, CheckSquare, Clock } from 'lucide-react';
+import { Plus, FolderKanban, TrendingUp, CheckSquare } from 'lucide-react';
 
+/**
+ * DashboardPage Component
+ * 
+ * @returns {JSX.Element}
+ */
 export default function DashboardPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { projects, loading, error, addProject, removeProject } = useProjects();
+  const { projects, loading, addProject, removeProject } = useProjects();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState('all');
 
-  // Calculate stats
+  // Compute aggregate statistics across user's projects
   const totalProjects = projects.length;
   const activeProjects = projects.filter((p) => p.status === 'active').length;
   const totalTasks = projects.reduce((sum, p) => sum + (p.taskCount || 0), 0);
 
-  // Filter projects based on active tab
+  // Filter projects by active status tab
   const filteredProjects =
-    activeFilter === 'all' ? projects : projects.filter((p) => p.status === activeFilter);
+    activeFilter === 'all'
+      ? projects
+      : projects.filter((p) => p.status === activeFilter);
 
-  // Handle project creation
+  /**
+   * Handle new project creation and dismiss the modal.
+   * 
+   * @param {Object} data - Project form payload.
+   */
   const handleCreateProject = async (data) => {
     try {
       await addProject(data);
@@ -36,7 +55,11 @@ export default function DashboardPage() {
     }
   };
 
-  // Handle project deletion
+  /**
+   * Confirm and delete a project by ID.
+   * 
+   * @param {string} projectId - ID of the project to remove.
+   */
   const handleDeleteProject = async (projectId) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
       try {
@@ -47,7 +70,11 @@ export default function DashboardPage() {
     }
   };
 
-  // Handle project card click
+  /**
+   * Navigate to the project detail view.
+   * 
+   * @param {string} projectId - ID of the selected project.
+   */
   const handleProjectClick = (projectId) => {
     navigate(`/projects/${projectId}`);
   };
@@ -62,49 +89,49 @@ export default function DashboardPage() {
         </h1>
       </div>
 
-      {/* Stats Bar */}
+      {/* Metrics Bar */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Total Projects Stat */}
+        {/* Total Projects Card */}
         <div className="card">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-gray-400 text-sm mb-1">Total Projects</p>
               <p className="text-2xl font-bold text-white">{totalProjects}</p>
             </div>
-            <div className="rounded-lg bg-indigo-600/20 p-3 text-indigo-400">
+            <div className="rounded-lg bg-blue-600/20 p-3 text-blue-400">
               <FolderKanban size={20} />
             </div>
           </div>
         </div>
 
-        {/* Active Projects Stat */}
+        {/* Active Projects Card */}
         <div className="card">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-gray-400 text-sm mb-1">Active Projects</p>
               <p className="text-2xl font-bold text-white">{activeProjects}</p>
             </div>
-            <div className="rounded-lg bg-green-600/20 p-3 text-green-400">
+            <div className="rounded-lg bg-emerald-600/20 p-3 text-emerald-400">
               <TrendingUp size={20} />
             </div>
           </div>
         </div>
 
-        {/* Total Tasks Stat */}
+        {/* Total Tasks Card */}
         <div className="card">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-gray-400 text-sm mb-1">Total Tasks</p>
               <p className="text-2xl font-bold text-white">{totalTasks}</p>
             </div>
-            <div className="rounded-lg bg-purple-600/20 p-3 text-purple-400">
+            <div className="rounded-lg bg-yellow-500/20 p-3 text-yellow-400">
               <CheckSquare size={20} />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Header and New Project Button */}
+      {/* Section Header and Create Project Action */}
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-white">My Projects</h2>
         <button
@@ -117,7 +144,7 @@ export default function DashboardPage() {
         </button>
       </div>
 
-      {/* Filter Tabs */}
+      {/* Status Filter Tabs */}
       <div className="flex gap-3 border-b border-surface-border">
         {['all', 'active', 'paused', 'completed'].map((filter) => (
           <button
@@ -126,7 +153,7 @@ export default function DashboardPage() {
             onClick={() => setActiveFilter(filter)}
             className={`px-4 py-3 font-medium transition capitalize border-b-2 ${
               activeFilter === filter
-                ? 'border-indigo-500 text-white bg-indigo-600/10'
+                ? 'border-blue-500 text-white bg-blue-600/10'
                 : 'border-transparent text-gray-500 hover:bg-surface-raised'
             }`}
           >
@@ -176,4 +203,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-

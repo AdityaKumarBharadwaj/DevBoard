@@ -56,7 +56,7 @@ export default function NotesList({ notes, loading, onAdd, onEdit, onDelete }) {
 
         {loading ? (
           <div className="flex h-40 items-center justify-center">
-            <div className="h-8 w-8 animate-spin rounded-full border-2 border-indigo-500 border-t-transparent" />
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
           </div>
         ) : notes.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-surface-border p-8 text-center text-gray-400">
@@ -72,7 +72,7 @@ export default function NotesList({ notes, loading, onAdd, onEdit, onDelete }) {
                 <div
                   key={note._id}
                   className={`group rounded-2xl border px-4 py-3 transition ${
-                    active ? 'border-indigo-500 bg-surface-raised' : 'border-transparent bg-dark-950 hover:border-surface-border'
+                    active ? 'border-blue-500 bg-surface-raised' : 'border-transparent bg-dark-950 hover:border-surface-border'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">

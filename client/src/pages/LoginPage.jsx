@@ -1,9 +1,23 @@
+/**
+ * LoginPage Component
+ * ============================================================================
+ * Provides user authentication interface. Manages controlled form inputs for
+ * email and password, executes client-side validation, invokes authentication
+ * services via AuthContext, and redirects authenticated users to /dashboard.
+ * ============================================================================
+ */
+
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, LogIn, AlertCircle } from 'lucide-react';
 import logo from '../assets/logo.png';
 
+/**
+ * LoginPage Component
+ * 
+ * @returns {JSX.Element}
+ */
 export default function LoginPage() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState(null);
@@ -11,6 +25,11 @@ export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  /**
+   * Handle changes across controlled inputs and clear active errors.
+   * 
+   * @param {React.ChangeEvent<HTMLInputElement>} e
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -20,11 +39,17 @@ export default function LoginPage() {
     setError(null);
   };
 
+  /**
+   * Validate email and password inputs, authenticate via AuthContext,
+   * and navigate to dashboard on success.
+   * 
+   * @param {React.FormEvent} e
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
 
-    // Validate form
+    // Validate form fields
     if (!formData.email.trim() || !formData.password.trim()) {
       setError('Email and password are required');
       return;
@@ -43,10 +68,10 @@ export default function LoginPage() {
 
   return (
     <div className="space-y-8">
-      {/* Logo and Title */}
+      {/* Logo and Brand Header */}
       <div className="flex flex-col items-center gap-3">
         <img src={logo} alt="devBoard logo" className="h-16 w-auto object-contain" />
-        <h1 className="text-2xl font-bold text-indigo-400">devBoard</h1>
+        <h1 className="text-2xl font-bold text-white">devBoard</h1>
       </div>
 
       {/* Heading and Subheading */}
@@ -55,7 +80,7 @@ export default function LoginPage() {
         <p className="text-gray-400">Sign in to your developer workspace</p>
       </div>
 
-      {/* Form */}
+      {/* Authentication Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Email Input */}
         <div className="relative">
@@ -83,7 +108,7 @@ export default function LoginPage() {
           />
         </div>
 
-        {/* Error Message */}
+        {/* Error Feedback */}
         {error && (
           <div className="flex items-start gap-2 rounded-lg bg-red-500/10 border border-red-500/20 p-3">
             <AlertCircle className="mt-0.5 text-red-500 flex-shrink-0" size={18} />
@@ -91,7 +116,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* Submit Button */}
+        {/* Submit Action */}
         <button
           type="submit"
           disabled={loading}
@@ -111,11 +136,11 @@ export default function LoginPage() {
         </button>
       </form>
 
-      {/* Registration Link */}
+      {/* Registration Redirect */}
       <div className="text-center">
         <p className="text-gray-400">
           Don't have an account?{' '}
-          <Link to="/register" className="font-medium text-indigo-400 hover:text-indigo-300 transition">
+          <Link to="/register" className="font-medium text-blue-400 hover:text-blue-300 transition">
             Sign up
           </Link>
         </p>

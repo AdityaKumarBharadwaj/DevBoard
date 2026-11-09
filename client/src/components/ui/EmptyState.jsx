@@ -6,8 +6,8 @@ export default function EmptyState({ icon: Icon, title, description, actionLabel
       <div className="border border-dashed border-surface-border rounded-2xl p-12 flex flex-col items-center text-center">
         {/* Icon Circle */}
         {Icon && (
-          <div className="rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 p-4 mb-4">
-            <Icon size={64} className="text-white" />
+          <div className="rounded-2xl bg-surface-raised border border-surface-border text-blue-400 p-4 mb-4">
+            <Icon size={64} />
           </div>
         )}
 

@@ -17,20 +17,6 @@ export default function RegisterPage() {
   const { register } = useAuth();
   const navigate = useNavigate();
 
-  // Calculate password strength
-  const getPasswordStrength = (password) => {
-    if (password.length < 6) return 'weak';
-    if (password.length < 10) return 'medium';
-    return 'strong';
-  };
-
-  const passwordStrength = getPasswordStrength(formData.password);
-  const strengthConfig = {
-    weak: { color: 'bg-red-500', label: 'Weak' },
-    medium: { color: 'bg-yellow-500', label: 'Medium' },
-    strong: { color: 'bg-green-500', label: 'Strong' },
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -90,7 +76,7 @@ export default function RegisterPage() {
       <div className="flex flex-col items-center gap-3">
         {/* 2. Replaced Code2 with your logo image */}
         <img src={logo} alt="devBoard logo" className="h-16 w-auto object-contain" />
-        <h1 className="text-2xl font-bold text-indigo-400">devBoard</h1>
+        <h1 className="text-2xl font-bold text-white">devBoard</h1>
       </div>
 
       {/* Heading and Subheading */}
@@ -140,35 +126,6 @@ export default function RegisterPage() {
           />
         </div>
 
-        {/* Password Strength Indicator */}
-        {formData.password && (
-          <div className="space-y-2">
-            <div className="flex h-2 gap-1 overflow-hidden rounded-full bg-surface-raised">
-              {['weak', 'medium', 'strong'].map((level) => (
-                <div
-                  key={level}
-                  className={`flex-1 transition-colors ${
-                    (passwordStrength === 'weak' && level === 'weak') ||
-                    (passwordStrength === 'medium' && (level === 'weak' || level === 'medium')) ||
-                    (passwordStrength === 'strong' && (level === 'weak' || level === 'medium' || level === 'strong'))
-                      ? strengthConfig[passwordStrength].color
-                      : 'bg-surface-raised'
-                  }`}
-                />
-              ))}
-            </div>
-            <p className={`text-xs font-medium ${
-              passwordStrength === 'weak'
-                ? 'text-red-400'
-                : passwordStrength === 'medium'
-                ? 'text-yellow-400'
-                : 'text-green-400'
-            }`}>
-              Password strength: {strengthConfig[passwordStrength].label}
-            </p>
-          </div>
-        )}
-
         {/* Confirm Password Input */}
         <div className="relative">
           <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
@@ -214,7 +171,7 @@ export default function RegisterPage() {
       <div className="text-center">
         <p className="text-gray-400">
           Already have an account?{' '}
-          <Link to="/login" className="font-medium text-indigo-400 hover:text-indigo-300 transition">
+          <Link to="/login" className="font-medium text-blue-400 hover:text-blue-300 transition">
             Sign in
           </Link>
         </p>
@@ -222,3 +179,18 @@ export default function RegisterPage() {
     </div>
   );
 }
+
+
+
+// ^       → start of string
+// $       → end of string
+// .       → any character
+// \.      → literal dot
+// *       → 0 or more
+// +       → 1 or more
+// ?       → 0 or 1
+// []      → character set
+// [^]     → NOT these characters
+// \d      → digit
+// \w      → word character
+// \s      → whitespace

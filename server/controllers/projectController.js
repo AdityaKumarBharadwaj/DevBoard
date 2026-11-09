@@ -1,14 +1,7 @@
 const Project = require('../models/Project');
 const Task = require('../models/Task');
-const Sprint = require('../models/Sprint');
-const Note = require('../models/Note');
 const { sendSuccess, sendError } = require('../utils/responseHelpers');
 
-/**
- * Get all projects owned by the authenticated user.
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
 const getProjects = async (req, res) => {
   try {
     const projects = await Project.find({ owner: req.user._id }).sort({ createdAt: -1 });
@@ -29,11 +22,6 @@ const getProjects = async (req, res) => {
   }
 };
 
-/**
- * Create a new project for the authenticated user.
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
 const createProject = async (req, res) => {
   try {
     const { title, description, techStack, githubLink, status } = req.body;
@@ -57,11 +45,7 @@ const createProject = async (req, res) => {
   }
 };
 
-/**
- * Update an existing project owned by the authenticated user.
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
+
 const updateProject = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
@@ -83,16 +67,6 @@ const updateProject = async (req, res) => {
   }
 };
 
-/**
- * Delete a project and all related tasks, sprints, and notes.
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
-/**
- * Delete a project and all related tasks, sprints, and notes.
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
 const deleteProject = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
@@ -105,12 +79,7 @@ const deleteProject = async (req, res) => {
       return sendError(res, 'Not authorized', 403);
     }
     await project.deleteOne();
-
-    await Promise.all([
-      Task.deleteMany({ projectId: req.params.id }),
-      Sprint.deleteMany({ projectId: req.params.id }),
-      Note.deleteMany({ projectId: req.params.id }),
-    ]);
+    await Task.deleteMany({ projectId: req.params.id });
 
     return sendSuccess(res, { message: 'Project and all related data deleted' });
   } catch (error) {

@@ -1,47 +1,27 @@
+/**
+ * Server Entry Point
+ * ============================================================================
+ * Initializes the Express application, sets up middleware (CORS, body parsing),
+ * mounts API routes, connects to the database, and exposes health and error handlers.
+ * ============================================================================
+ */
+
 const express = require('express');
 const app = express();
-const path = require('path');
-const fs = require('fs');
 const cors = require('cors');
-const multer = require('multer');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const taskRoutes = require('./routes/taskRoutes');
-const sprintRoutes = require('./routes/sprintRoutes');
-const noteRoutes = require('./routes/noteRoutes');
-const { sendSuccess } = require('./utils/responseHelpers');
 
 // Load environment variables from .env
 dotenv.config();
 
-// Ensure uploads folder exists before using multer or static serving
-const uploadsPath = path.join(__dirname, 'uploads');
-fs.mkdirSync(uploadsPath, { recursive: true });
-
-// Multer configuration
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadsPath);
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-  if (allowedTypes.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(new Error('Unsupported file type'), false);
-  }
-};
-
-const upload = multer({ storage, fileFilter });
-
-// CORS middleware
+/**
+ * Cross-Origin Resource Sharing (CORS) Configuration
+ * Permits incoming requests from the configured frontend origin with credentials.
+ */
 app.use(
   cors({
     origin: process.env.CLIENT_URL || 'http://localhost:5173',
@@ -49,35 +29,43 @@ app.use(
   })
 );
 
-// Body parsing middleware
+/**
+ * Body Parsing Middleware
+ * Parses incoming JSON payloads and URL-encoded query strings.
+ */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Static uploads folder
-app.use('/uploads', express.static(uploadsPath));
-
-
-
-// Mount routes
+/**
+ * API Routes Mounting
+ */
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', taskRoutes);
-app.use('/api/sprints', sprintRoutes);
-app.use('/api/notes', noteRoutes);
 
-app.post('/api/upload', upload.single('file'), (req, res) => {
-  return sendSuccess(res, { filePath: req.file.path });
-});
-
-// Health check route
+/**
+ * Health Check Endpoint
+ * GET /api/health
+ * Used by cloud deployment platforms (Render, AWS, Docker, Kubernetes) for uptime
+ * monitoring and container liveness probes, as well as quick manual verification.
+ */
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date() });
 });
 
-// Global error handler
+/**
+ * Global Error Handling Middleware
+ * 
+ * Express identifies this as an error handler because it defines exactly four parameters:
+ * (err, req, res, next).
+ * 
+ * Catches any unhandled synchronous and forwarded asynchronous errors from routes,
+ * logs the stack trace to the console, and returns a clean, standardized JSON response.
+ * This prevents uncaught exceptions from terminating the Node.js process.
+ */
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(err.statusCode || 500).json({
+  return res.status(err.statusCode || 500).json({
     success: false,
     message: err.message || 'Server Error',
   });
@@ -85,15 +73,20 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-connectDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error('Failed to connect MongoDB:', error);
-    process.exit(1);
+/**
+ * Establishes database connection and starts listening for HTTP requests.
+ */
+const startServer = async () => {
+  await connectDB();
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
+};
 
-module.exports = { app, upload };
+startServer();
+
+/**
+ * Export the Express app instance for automated integration testing
+ * (e.g., with Supertest/Jest) and serverless environments.
+ */
+module.exports = { app };

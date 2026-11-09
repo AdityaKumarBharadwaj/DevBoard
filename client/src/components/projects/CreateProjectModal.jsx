@@ -1,10 +1,29 @@
+/**
+ * CreateProjectModal Component
+ * ============================================================================
+ * Modal dialog for creating new projects or updating existing project metadata.
+ * Manages form state, tech stack tag parsing, keyboard Escape dismissal,
+ * outside click handling via event bubbling checks, and asynchronous submission.
+ * ============================================================================
+ */
+
 import { useState, useEffect } from 'react';
 import { X, Plus, Loader2, FolderPlus, AlertCircle } from 'lucide-react';
 
+/**
+ * CreateProjectModal Component
+ * 
+ * @param {Object} props
+ * @param {boolean} props.isOpen - Whether the modal dialog is displayed.
+ * @param {Function} props.onClose - Callback invoked to dismiss the modal.
+ * @param {Function} props.onSubmit - Callback receiving the processed project payload.
+ * @param {Object|null} [props.initialData=null] - Project data for edit mode; null for create mode.
+ * @param {string} [props.submitLabel='Create Project'] - Action button text.
+ * @returns {JSX.Element|null}
+ */
 export default function CreateProjectModal({
   isOpen,
   onClose,
-  onCreate,
   onSubmit,
   initialData = null,
   submitLabel = 'Create Project',
@@ -19,7 +38,9 @@ export default function CreateProjectModal({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Handle Escape key press
+  /**
+   * Listen for Escape key press to dismiss modal and clean up event listener on unmount.
+   */
   useEffect(() => {
     if (!isOpen) return;
 
@@ -33,6 +54,9 @@ export default function CreateProjectModal({
     return () => window.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
 
+  /**
+   * Synchronize form state with initialData when opening or reset to empty defaults.
+   */
   useEffect(() => {
     if (!isOpen) {
       setFormData({
@@ -58,6 +82,11 @@ export default function CreateProjectModal({
     }
   }, [initialData, isOpen]);
 
+  /**
+   * Update input values in state and clear active error message.
+   * 
+   * @param {React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>} e
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -67,6 +96,11 @@ export default function CreateProjectModal({
     setError(null);
   };
 
+  /**
+   * Validate required fields, split tech stack into trimmed array, and invoke onSubmit.
+   * 
+   * @param {React.FormEvent} e
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -91,13 +125,11 @@ export default function CreateProjectModal({
 
     setLoading(true);
     try {
-      const submitCallback = onSubmit || onCreate;
-      if (!submitCallback) {
+      if (!onSubmit) {
         throw new Error('Submit callback is required');
       }
 
-      await submitCallback(payload);
-
+      await onSubmit(payload);
       setFormData({
         title: '',
         description: '',
@@ -116,8 +148,9 @@ export default function CreateProjectModal({
   if (!isOpen) return null;
 
   return (
+    // Outer modal backdrop with click-outside dismissal
     <div
-      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center"
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onClose();
@@ -128,7 +161,7 @@ export default function CreateProjectModal({
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-indigo-600/20 p-2 text-indigo-400">
+            <div className="rounded-lg bg-blue-600/20 p-2 text-blue-400">
               <FolderPlus size={20} />
             </div>
             <h2 className="text-xl font-semibold text-white">
@@ -145,7 +178,7 @@ export default function CreateProjectModal({
           </button>
         </div>
 
-        {/* Form */}
+        {/* Project Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Title Input */}
           <div>
@@ -233,7 +266,7 @@ export default function CreateProjectModal({
             </div>
           )}
 
-          {/* Footer Buttons */}
+          {/* Action Buttons */}
           <div className="flex gap-3 pt-4">
             <button
               type="button"

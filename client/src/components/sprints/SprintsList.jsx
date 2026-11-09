@@ -41,10 +41,10 @@ export default function SprintsList({ sprints, loading, tasks, onAdd, onActivate
       ) : (
         <div className="space-y-6">
           {activeSprint && (
-            <div className="rounded-3xl border border-indigo-500/30 bg-indigo-500/10 p-5">
+            <div className="rounded-3xl border border-yellow-500/30 bg-yellow-500/10 p-5">
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.3em] text-indigo-300">🟢 Current Sprint</p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-yellow-400">🟢 Current Sprint</p>
                   <h3 className="mt-2 text-xl font-semibold text-white">{activeSprint.name}</h3>
                   {activeSprint.goal && <p className="mt-2 text-sm text-gray-300">{activeSprint.goal}</p>}
                 </div>

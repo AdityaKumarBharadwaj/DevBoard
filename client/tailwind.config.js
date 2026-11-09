@@ -9,29 +9,35 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#f0f4ff',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
         },
         dark: {
-          800: '#1e1e2e',
-          850: '#181825',
-          900: '#11111b',
-          950: '#0d0d14',
+          800: '#18181b',
+          850: '#141416',
+          900: '#0f0f11',
+          950: '#09090b',
         },
         surface: {
-          DEFAULT: '#1e1e2e',
-          raised: '#2a2a3e',
-          border: '#313145',
+          DEFAULT: '#121215',
+          raised: '#1c1c20',
+          border: '#27272a',
         },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        glow: '0 0 20px rgba(99, 102, 241, 0.15)',
-        card: '0 4px 24px rgba(0,0,0,0.4)',
+        glow: '0 0 20px rgba(37, 99, 235, 0.15)',
+        card: '0 4px 24px rgba(0,0,0,0.6)',
       },
       borderRadius: {
         xl: '1rem',
@@ -41,4 +47,3 @@ export default {
   },
   plugins: [],
 }
-

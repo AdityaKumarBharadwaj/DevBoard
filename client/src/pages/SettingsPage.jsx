@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { User, Lock, Trash2, Save, Loader2, Shield, Bell, Palette } from 'lucide-react';
+import { User, Lock, Trash2, Save, Loader2, Shield, Bell } from 'lucide-react';
 
 export default function SettingsPage() {
   const { user } = useAuth();
@@ -113,7 +113,7 @@ export default function SettingsPage() {
       await new Promise((resolve) => setTimeout(resolve, 800));
       setSuccessMessage('Account deletion request submitted.');
       setDeleteConfirmation('');
-    } catch (err) {
+    } catch {
       setDeleteError('Failed to delete account.');
     } finally {
       setDeleting(false);
@@ -129,7 +129,7 @@ export default function SettingsPage() {
             onClick={() => setActiveSection('profile')}
             className={`flex w-full items-center gap-3 rounded-2xl px-4 py-4 text-left transition ${
               activeSection === 'profile'
-                ? 'bg-indigo-500/10 text-white ring-1 ring-indigo-500/20'
+                ? 'bg-blue-500/10 text-white ring-1 ring-blue-500/20'
                 : 'text-gray-400 hover:bg-white/5 hover:text-white'
             }`}
           >
@@ -145,7 +145,7 @@ export default function SettingsPage() {
             onClick={() => setActiveSection('security')}
             className={`flex w-full items-center gap-3 rounded-2xl px-4 py-4 text-left transition ${
               activeSection === 'security'
-                ? 'bg-indigo-500/10 text-white ring-1 ring-indigo-500/20'
+                ? 'bg-blue-500/10 text-white ring-1 ring-blue-500/20'
                 : 'text-gray-400 hover:bg-white/5 hover:text-white'
             }`}
           >
@@ -180,7 +180,7 @@ export default function SettingsPage() {
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <div className="flex items-center gap-3">
-                  <div className="grid h-14 w-14 place-items-center rounded-3xl bg-gradient-to-br from-indigo-600 to-violet-600 text-2xl font-semibold text-white">
+                  <div className="grid h-14 w-14 place-items-center rounded-2xl bg-blue-600 text-2xl font-semibold text-white">
                     {initials}
                   </div>
                   <div>
@@ -238,7 +238,7 @@ export default function SettingsPage() {
           <div className="rounded-3xl border border-surface-border bg-dark-900 p-8">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div className="flex items-center gap-3">
-                <div className="rounded-3xl bg-indigo-600/10 p-3 text-indigo-300">
+                <div className="rounded-2xl bg-blue-600/10 p-3 text-blue-400">
                   <Lock size={20} />
                 </div>
                 <div>

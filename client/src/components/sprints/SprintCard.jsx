@@ -19,7 +19,7 @@ export default function SprintCard({ sprint, onActivate, onDelete, taskCount }) 
   const ended = sprint.endDate && new Date(sprint.endDate) < new Date();
 
   return (
-    <div className={`card border-l-4 rounded-2xl p-4 transition ${isActive ? 'border-l-indigo-500 shadow-glow' : 'border-l-surface-border'}`}>
+    <div className={`card border-l-4 rounded-2xl p-4 transition ${isActive ? 'border-l-yellow-500 shadow-glow' : 'border-l-surface-border'}`}>
       <div className="flex items-start justify-between gap-3">
         <div>
           <h3 className="text-lg font-semibold text-white">{sprint.name}</h3>
@@ -39,7 +39,7 @@ export default function SprintCard({ sprint, onActivate, onDelete, taskCount }) 
 
       {sprint.goal && (
         <div className="mt-4 flex items-start gap-2 text-sm text-gray-400">
-          <Target size={16} className="mt-0.5 text-indigo-400" />
+          <Target size={16} className="mt-0.5 text-yellow-400" />
           <p className="italic">{sprint.goal}</p>
         </div>
       )}

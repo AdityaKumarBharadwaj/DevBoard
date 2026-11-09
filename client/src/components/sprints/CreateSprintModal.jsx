@@ -60,7 +60,7 @@ export default function CreateSprintModal({ isOpen, onClose, onCreate }) {
       <div className="bg-dark-800 rounded-2xl p-6 w-full max-w-xl shadow-card border border-surface-border">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-indigo-600/20 p-2 text-indigo-400">
+            <div className="rounded-lg bg-yellow-500/20 p-2 text-yellow-400">
               <Zap size={20} />
             </div>
             <div>

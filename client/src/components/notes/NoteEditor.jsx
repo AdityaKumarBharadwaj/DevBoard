@@ -40,7 +40,7 @@ export default function NoteEditor({ note, onSave, onClose }) {
       await onSave({ title, markdownContent: content });
       setIsDirty(false);
       setStatus('All changes saved');
-    } catch (err) {
+    } catch {
       setStatus('Save failed');
     } finally {
       setSaving(false);
@@ -60,7 +60,7 @@ export default function NoteEditor({ note, onSave, onClose }) {
   };
 
   const renderers = {
-    code({ node, inline, className, children, ...props }) {
+    code({ inline, className, children, ...props }) {
       const match = /language-(\w+)/.exec(className || '');
       return !inline ? (
         <SyntaxHighlighter
@@ -72,14 +72,14 @@ export default function NoteEditor({ note, onSave, onClose }) {
           {String(children).replace(/\n$/, '')}
         </SyntaxHighlighter>
       ) : (
-        <code className="rounded bg-indigo-500/10 px-1 py-0.5 font-mono text-sm text-indigo-200" {...props}>
+        <code className="rounded bg-blue-500/10 px-1 py-0.5 font-mono text-sm text-blue-300" {...props}>
           {children}
         </code>
       );
     },
     a({ href, children }) {
       return (
-        <a href={href} className="text-indigo-400 hover:underline" target="_blank" rel="noreferrer">
+        <a href={href} className="text-blue-400 hover:underline" target="_blank" rel="noreferrer">
           {children}
         </a>
       );
@@ -100,7 +100,7 @@ export default function NoteEditor({ note, onSave, onClose }) {
       return <li className="text-gray-300 ml-5 list-disc">{children}</li>;
     },
     blockquote({ children }) {
-      return <blockquote className="border-l-4 border-indigo-500 pl-4 italic text-gray-400">{children}</blockquote>;
+      return <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-400">{children}</blockquote>;
     },
   };
 
@@ -119,21 +119,21 @@ export default function NoteEditor({ note, onSave, onClose }) {
           <button
             type="button"
             onClick={() => setMode('edit')}
-            className={`rounded-full px-3 py-2 transition ${mode === 'edit' ? 'bg-indigo-600 text-white' : 'hover:bg-surface-raised'}`}
+            className={`rounded-full px-3 py-2 transition ${mode === 'edit' ? 'bg-blue-600 text-white' : 'hover:bg-surface-raised'}`}
           >
             <Edit3 size={16} /> Edit
           </button>
           <button
             type="button"
             onClick={() => setMode('split')}
-            className={`rounded-full px-3 py-2 transition ${mode === 'split' ? 'bg-indigo-600 text-white' : 'hover:bg-surface-raised'}`}
+            className={`rounded-full px-3 py-2 transition ${mode === 'split' ? 'bg-blue-600 text-white' : 'hover:bg-surface-raised'}`}
           >
             <Code size={16} /> Split
           </button>
           <button
             type="button"
             onClick={() => setMode('preview')}
-            className={`rounded-full px-3 py-2 transition ${mode === 'preview' ? 'bg-indigo-600 text-white' : 'hover:bg-surface-raised'}`}
+            className={`rounded-full px-3 py-2 transition ${mode === 'preview' ? 'bg-blue-600 text-white' : 'hover:bg-surface-raised'}`}
           >
             <Eye size={16} /> Preview
           </button>
