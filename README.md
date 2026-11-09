@@ -120,40 +120,86 @@ Upload screenshots, wireframes, PDFs, and diagrams directly to tasks. Architectu
 
 ## Screenshots
 
-  ### Authentication
-<img width="1919" height="904" alt="Screenshot 2026-05-25 004539" src="https://github.com/user-attachments/assets/955c5ef6-ca64-4449-a313-edfe1012b8b1" />
+### 1. Authentication (Login & Sign Up)
+*Modern dark-mode authentication workflow featuring JWT-based stateless sessions, bcrypt password hashing, and clean responsive inputs.*
 
-</br>
+<img src="./screenshots/01-authentication-login.png" alt="devBoard - Login Interface" width="100%" />
 
-### Project Dashboard
-<img width="1919" height="908" alt="Screenshot 2026-05-25 004553" src="https://github.com/user-attachments/assets/054e9ab2-f63c-43d3-bd56-552cdd9f13fb" />
+<br />
 
+<img src="./screenshots/02-authentication-register.png" alt="devBoard - Registration Interface" width="100%" />
 
-### Add Project
-<img width="1919" height="906" alt="Screenshot 2026-05-25 004623" src="https://github.com/user-attachments/assets/97ccb8cc-fa71-40ea-945a-465ca8fd4356" />
+---
 
+### 2. Multi-Project Dashboard
+*Central workspace displaying real-time productivity metrics (Total Projects, Active Projects, Total Tasks) with quick-action project cards and status filtering.*
 
-### Project dashboard
-<img width="1919" height="901" alt="Screenshot 2026-05-25 004739" src="https://github.com/user-attachments/assets/7f48eb0e-6327-446e-8608-d64b1c8bee49" />
+<img src="./screenshots/03-project-dashboard.png" alt="devBoard - Main Dashboard with Quick Stats" width="100%" />
 
-### Kanban Board & Tasks
-<img width="1916" height="902" alt="Screenshot 2026-05-25 004804" src="https://github.com/user-attachments/assets/8da954ba-d3aa-454a-8641-b88ae8f75a79" />
+---
 
-### Add task
-<img width="1919" height="913" alt="Screenshot 2026-05-25 004837" src="https://github.com/user-attachments/assets/83981ef6-a4a3-4125-8810-0efa64b4e2fb" />
+### 3. Projects Directory & Filters
+*Searchable and filterable project catalog allowing developers to filter by lifecycle status (Active, Paused, Completed) and sort by date or priority.*
 
-### Manage Task using Drag and Drop
-<img width="1919" height="908" alt="Screenshot 2026-05-25 005015" src="https://github.com/user-attachments/assets/8bcb0b2a-3368-411f-9f0a-475f09c6fe4e" />
+<img src="./screenshots/04-projects-directory.png" alt="devBoard - Projects Catalog with Filter Tabs" width="100%" />
 
-### Markdown Notes
-<img width="1919" height="911" alt="Screenshot 2026-05-25 005114" src="https://github.com/user-attachments/assets/7cececdf-eaaa-4c52-8296-79c70c53b5db" />
+---
 
-### Create Sprint
-<img width="1919" height="911" alt="Screenshot 2026-05-25 005147" src="https://github.com/user-attachments/assets/13901221-7fa9-45b8-a32c-89e246be0ba3" />
+### 4. Create Project Modal
+*Streamlined project creation modal capturing project name, technical descriptions, comma-separated tech stack tags, and GitHub repository links.*
 
-### Project Dashboard
-<img width="1919" height="909" alt="Screenshot 2026-05-25 005232" src="https://github.com/user-attachments/assets/0cd1d0ce-2b36-4204-9b94-388b6ea444fd" />
+<img src="./screenshots/05-add-project-modal.png" alt="devBoard - Create Project Modal" width="100%" />
 
+---
+
+### 5. Kanban Board & Algorithmic Complexity Tagging
+*Interactive 4-column drag-and-drop board (Backlog, In Progress, Code Review, Done) powered by `dnd-kit`, featuring priority badges and Big-O complexity indicators.*
+
+<img src="./screenshots/06-kanban-board.png" alt="devBoard - Kanban Board with Big-O Complexity Tags" width="100%" />
+
+---
+
+### 6. Add Task with Algorithmic Complexity
+*Developer-centric task creation supporting algorithmic complexity tagging (`O(1)` → `O(n²)`), estimated hours, due dates, labels, and sprint assignment.*
+
+<img src="./screenshots/07-add-task-modal.png" alt="devBoard - Add Task Dialog with Complexity & Priority" width="100%" />
+
+---
+
+### 7. Task Inspection & Management
+*Detailed task editor modal to inspect implementation details, update workflow status, adjust Big-O estimates, and track sprint allocations.*
+
+<img src="./screenshots/08-edit-task-modal.png" alt="devBoard - Task Inspection and Edit Modal" width="100%" />
+
+---
+
+### 8. Technical Notes Workspace (Markdown & Syntax Highlighting)
+*Dedicated engineering notebook with split-pane live Markdown preview, syntax-highlighted code blocks, and automatic persistence.*
+
+<img src="./screenshots/09-markdown-notes.png" alt="devBoard - Split Markdown Notes Workspace" width="100%" />
+
+---
+
+### 9. Sprint Planning
+*Agile sprint dashboard tracking active milestones, sprint progress, task allocation, and remaining timeline countdown.*
+
+<img src="./screenshots/10-sprint-planning.png" alt="devBoard - Sprint Timeline and Active Sprint Overview" width="100%" />
+
+---
+
+### 10. Create Sprint Modal
+*Intuitive sprint creation modal to define sprint names, milestone engineering goals, and calendar execution windows.*
+
+<img src="./screenshots/11-create-sprint-modal.png" alt="devBoard - Create Sprint Modal Dialog" width="100%" />
+
+---
+
+### 11. Developer Settings
+*Developer profile and security management hub for updating personal info, email addresses, credentials, and account settings.*
+
+<img src="./screenshots/12-developer-settings.png" alt="devBoard - User Profile and Developer Settings" width="100%" />
+
+---
 
 ## Tech Stack
 
@@ -195,6 +241,8 @@ devBoard/
 │       ├── services/                # Axios API service layer
 │       ├── utils/                   # Helper functions
 │       └── routes/                  # ProtectedRoute, PublicRoute
+│
+├── screenshots/                     # Platform preview screenshots
 │
 └── server/                          # Node.js Backend
     ├── config/                      # DB connection, constants
